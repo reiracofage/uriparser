@@ -10,7 +10,7 @@ char td[] = "<td>";
 char barratd[] = "</td>";
 char pe[] = "<p>";
 char barrape[] = "</p>";
-char berre[] = "<br />";
+char const * berre[] = {"<br />", "<br/>", "</br>", "</ br>"};
 char s[MAXSIZE];
 int N=0;
 
@@ -43,10 +43,12 @@ int main() {
             sprintf(aux,"in%d",ncasos);
             FILE *f = fopen(aux,"w");
             for (int j=ini;j<=fim;j++) {
-                if (!strncmp(s+j,berre,strlen(berre))) {
-                    fprintf(f,"\n");
-                    j += strlen(berre);
-                } else if (!strncmp(s+j,barrape,strlen(barrape))) {
+                for (int br = 0; br < 4; br++)
+                    if (!strncmp(s+j,berre[br],strlen(berre[br]))) {
+                        fprintf(f,"\n");
+                        j += strlen(berre[br]);
+                    }
+                if (!strncmp(s+j,barrape,strlen(barrape))) {
                     fprintf(f,"\n");
                     j += strlen(barrape);
                 } else if (!strncmp(s+j,pe,strlen(pe))) {
@@ -74,10 +76,12 @@ int main() {
             sprintf(aux,"out%d",ncasos);
             f = fopen(aux,"w");
             for (int j=ini;j<=fim;j++) {
-                if (!strncmp(s+j,berre,strlen(berre))) {
-                    fprintf(f,"\n");
-                    j += strlen(berre);
-                } else if (!strncmp(s+j,barrape,strlen(barrape))) {
+                for (int br = 0; br < 4; br++)
+                    if (!strncmp(s+j,berre[br],strlen(berre[br]))) {
+                        fprintf(f,"\n");
+                        j += strlen(berre[br]);
+                    }
+                if (!strncmp(s+j,barrape,strlen(barrape))) {
                     fprintf(f,"\n");
                     j += strlen(barrape);
                 } else if (!strncmp(s+j,pe,strlen(pe))) {

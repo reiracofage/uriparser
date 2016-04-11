@@ -19,7 +19,7 @@ base=$(echo $TITLE | sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚçÇ/aAa
 
 echo "Got problem $PID - $TITLE ($base)."
 echo "Parsing sample I/O..."
-ncases=$(echo $(cat .enum) | ./parser/geraio)
+ncases=$(echo "$(cat .enum | tr $'\x09\n' " " | tr -s " ")" | ./parser/geraio)
 echo "$ncases case(s) found."
 
 rm -f .enum
@@ -29,6 +29,8 @@ echo "Building the file structure..."
 dir=${base}${PID}
 mkdir -p $dir
 for i in $(seq 0 $(( $ncases - 1 )) ); do
+    sed "s/^[ \t\cM]*//" -i in$i
+    sed "s/^[ \t\cM]*//" -i out$i
     mv in$i out$i $dir
 done
 cp parser/modelo.cpp ${dir}/${base}.cpp
